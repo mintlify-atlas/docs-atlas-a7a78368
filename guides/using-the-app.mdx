@@ -1,0 +1,223 @@
+---
+title: Using the App
+description: Learn how to navigate and use the Cheat Sheets mobile app effectively
+---
+
+## Overview
+
+Cheat Sheets is a mobile reference guide for developers, providing quick access to programming language syntax, commands, and best practices for Python, Rust, Swift, JavaScript, Kotlin, Go, Git, and more.
+
+## Main Features
+
+### Cheat Sheets Tab
+
+The main tab where you can browse and search through various programming language references.
+
+<Steps>
+  <Step title="Browse Cheat Sheets">
+    Open the app and navigate to the **Cheat Sheets** tab from the bottom navigation bar. You'll see a list of available programming languages and tools.
+  </Step>
+  
+  <Step title="Select a Language">
+    Tap on any language card (e.g., Python, Rust, Swift) to view its cheat sheet content.
+  </Step>
+  
+  <Step title="View Content">
+    Each cheat sheet is organized into sections with code examples, syntax references, and explanations.
+  </Step>
+</Steps>
+
+### Search Functionality
+
+Quickly find specific topics or commands across all cheat sheets.
+
+<Info>
+  The search feature allows you to search across all available cheat sheets simultaneously, making it easy to find what you need without browsing through individual sheets.
+</Info>
+
+<Steps>
+  <Step title="Open Search">
+    Tap the search icon in the Cheat Sheets tab or navigate to `/cheatsheet/search`.
+  </Step>
+  
+  <Step title="Enter Query">
+    Type your search term (e.g., "array", "function", "git commit").
+  </Step>
+  
+  <Step title="View Results">
+    Results are displayed in real-time as you type, showing matching content from all cheat sheets.
+  </Step>
+</Steps>
+
+### Coupons Tab
+
+Discover free and discounted programming courses.
+
+<Note>
+  The Coupons feature is powered by the Real Discount API, providing up-to-date information on available course deals.
+</Note>
+
+Browse through available course coupons, view details, and access promotional offers for learning resources.
+
+## Navigation Structure
+
+The app uses a bottom navigation bar with three main sections:
+
+<Tabs>
+  <Tab title="Cheat Sheets">
+    **Route**: `/cheatsheet`
+    
+    - Browse all available cheat sheets
+    - Access search functionality
+    - View detailed content for each language
+    - Navigate to specific sections within a cheat sheet
+    
+    **Child Routes**:
+    - `/cheatsheet/search` - Search across all sheets
+    - `/cheatsheet/detail` - View detailed section content
+    - `/cheatsheet/:sheetId` - View specific cheat sheet
+  </Tab>
+  
+  <Tab title="Coupons">
+    **Route**: `/coupon`
+    
+    - Browse available course coupons
+    - View coupon details and descriptions
+    - Access promotional links
+    
+    **Child Routes**:
+    - `/coupon/:slug` - View specific coupon details
+  </Tab>
+  
+  <Tab title="Settings">
+    **Route**: `/settings`
+    
+    - Change app theme (Light, Dark, System)
+    - View app version and build information
+    - Access author and contribution links
+    - Report issues
+  </Tab>
+</Tabs>
+
+## Cheat Sheet Structure
+
+Each cheat sheet follows a consistent structure for easy navigation:
+
+```json
+{
+  "id": "python",
+  "title": "Python",
+  "tags": ["programming", "language"],
+  "categories": ["Programming Languages"],
+  "icon": "python-icon.svg",
+  "intro": "Python is a high-level programming language...",
+  "sections": [
+    {
+      "title": "Variables",
+      "content": "# Variable examples\nx = 5\nname = 'Python'"
+    }
+  ]
+}
+```
+
+## Theme Settings
+
+Customize the app appearance to match your preferences:
+
+<Steps>
+  <Step title="Open Settings">
+    Navigate to the **Settings** tab from the bottom navigation.
+  </Step>
+  
+  <Step title="Select Theme">
+    Tap on the **Theme** option to open the theme selector.
+  </Step>
+  
+  <Step title="Choose Mode">
+    Select from three options:
+    - **Light** - Light theme for bright environments
+    - **Dark** - Dark theme for low-light conditions
+    - **System** - Automatically match device settings
+  </Step>
+</Steps>
+
+## Tips for Effective Use
+
+<CardGroup cols={2}>
+  <Card title="Use Search Often" icon="magnifying-glass">
+    Don't browse manually—use the search feature to quickly find specific commands or syntax.
+  </Card>
+  
+  <Card title="Bookmark Favorites" icon="bookmark">
+    Keep track of frequently used languages by accessing them from the main list.
+  </Card>
+  
+  <Card title="Dark Mode" icon="moon">
+    Use dark mode when coding at night to reduce eye strain.
+  </Card>
+  
+  <Card title="Offline Access" icon="wifi-slash">
+    Some content may be cached for offline access (feature in development).
+  </Card>
+</CardGroup>
+
+## Viewing Code Examples
+
+All cheat sheets include syntax-highlighted code examples:
+
+- Code is displayed using Flutter's `flutter_highlight` package
+- Markdown content is rendered using `markdown_widget`
+- Long code blocks are scrollable
+- Copy functionality may be available depending on your device
+
+## Getting Help
+
+<AccordionGroup>
+  <Accordion title="App not loading content?">
+    Check your internet connection. The app requires network access to fetch cheat sheet data from the backend API.
+  </Accordion>
+  
+  <Accordion title="How do I report a bug?">
+    Go to **Settings** → **Report an issue**, which will open the GitHub issues page in your browser.
+  </Accordion>
+  
+  <Accordion title="Can I use the app offline?">
+    Offline support is planned for future releases. Currently, an active internet connection is required.
+  </Accordion>
+  
+  <Accordion title="How often are cheat sheets updated?">
+    Content is fetched from the backend API, which is updated regularly. Pull to refresh on the main screen to get the latest data.
+  </Accordion>
+</AccordionGroup>
+
+## Platform-Specific Notes
+
+<Tabs>
+  <Tab title="iOS">
+    <Warning>
+      When installed via AltStore, **do not** open the app using the "OPEN" button immediately after installation. This may cause deeplink issues. Instead, open the app from the home screen icon.
+    </Warning>
+    
+    - Distributed via AltStore (no jailbreak required)
+    - Requires sideloading setup
+    - May need to refresh app certificate every 7 days (free Apple ID)
+  </Tab>
+  
+  <Tab title="Android">
+    - Available on Google Play Store
+    - Also available as APK/AAB from GitHub Releases
+    - No special installation requirements
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Development Setup" icon="code" href="/guides/development-setup">
+    Learn how to set up the development environment
+  </Card>
+  
+  <Card title="Backend Configuration" icon="server" href="/guides/backend-configuration">
+    Configure the backend API for local development
+  </Card>
+</CardGroup>

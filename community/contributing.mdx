@@ -1,0 +1,215 @@
+---
+title: 'Contributing'
+description: 'Learn how to contribute to the Cheat Sheets project'
+---
+
+We're excited that you're interested in contributing to Cheat Sheets! This guide will help you get started with contributing code, documentation, or cheat sheets to the project.
+
+## Ways to Contribute
+
+There are many ways you can contribute to the Cheat Sheets project:
+
+- **Add or improve cheat sheets** - Share your knowledge by adding new cheat sheets or improving existing ones
+- **Fix bugs** - Help us squash bugs and improve stability
+- **Add new features** - Implement features from our [roadmap](https://github.com/ivansaul/cheat-sheets#road-map) or propose new ones
+- **Improve documentation** - Help make our docs clearer and more comprehensive
+- **Report issues** - Found a bug? Let us know by opening an [issue](https://github.com/ivansaul/cheat-sheets/issues)
+
+## Getting Started
+
+<Steps>
+<Step title="Fork and clone the repository">
+
+First, fork the repository on GitHub, then clone your fork:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/cheat-sheets.git
+cd cheat-sheets
+```
+
+</Step>
+
+<Step title="Set up your development environment">
+
+Make sure you have the required tools installed:
+
+- [Flutter](https://flutter.dev/docs/get-started/install)
+- [Rust](https://www.rust-lang.org/tools/install) (for backend development)
+- [npm](https://docs.npmjs.com/getting-started/installing-node) (for backend development)
+
+For a quick start without backend setup:
+
+```bash
+flutter pub get
+dart run build_runner build
+flutter run --release
+```
+
+<Tip>
+For full local setup including the backend API server, see our [Development Setup Guide](/guides/development-setup) and [Backend Configuration](/guides/backend-configuration).
+</Tip>
+
+</Step>
+
+<Step title="Create a feature branch">
+
+Create a new branch for your contribution:
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+Use descriptive branch names like:
+- `feature/add-typescript-cheatsheet`
+- `fix/ios-deeplink-issue`
+- `docs/improve-installation-guide`
+
+</Step>
+
+<Step title="Make your changes">
+
+Make your changes following our coding standards and best practices. Ensure your code:
+
+- Follows the existing code style
+- Includes comments where necessary
+- Works on both Android and iOS (when applicable)
+- Doesn't break existing functionality
+
+</Step>
+
+<Step title="Test your changes">
+
+Test your changes thoroughly:
+
+```bash
+# Run the app in debug mode
+flutter run
+
+# Run tests (if available)
+flutter test
+
+# Build for release to ensure no build issues
+flutter build apk --release
+```
+
+</Step>
+
+<Step title="Commit your changes">
+
+Write clear, descriptive commit messages:
+
+```bash
+git add .
+git commit -m "Add TypeScript cheat sheet with examples"
+```
+
+Good commit message examples:
+- `feat: add TypeScript cheat sheet`
+- `fix: resolve iOS deeplink issue on app launch`
+- `docs: update installation instructions for iOS`
+- `refactor: improve cheat sheet loading performance`
+
+</Step>
+</Steps>
+
+## Pull Request Guidelines
+
+When you're ready to submit your contribution:
+
+<Steps>
+<Step title="Push your changes">
+
+Push your branch to your fork:
+
+```bash
+git push origin feature/your-feature-name
+```
+
+</Step>
+
+<Step title="Create a pull request">
+
+Go to the [Cheat Sheets repository](https://github.com/ivansaul/cheat-sheets) and create a pull request from your fork.
+
+</Step>
+
+<Step title="Write a clear PR description">
+
+Your pull request should include:
+
+- **Clear title** - Summarize what your PR does
+- **Description** - Explain what changes you made and why
+- **Related issues** - Link any related issues using `Fixes #123` or `Closes #123`
+- **Screenshots** - Include screenshots or videos for UI changes
+- **Testing** - Describe how you tested your changes
+
+</Step>
+</Steps>
+
+<Note>
+Pull requests are usually reviewed within a few days. Please be patient and responsive to feedback.
+</Note>
+
+## Contributing Cheat Sheets
+
+Cheat sheets are the heart of this project! Here's how to contribute new cheat sheets or improve existing ones:
+
+### Adding a New Cheat Sheet
+
+1. Cheat sheets are fetched from the backend API
+2. The backend pulls content from the [devstack-worker](https://github.com/ivansaul/devstack-worker) repository
+3. To add a new cheat sheet, you'll need to contribute to the backend repository
+4. Follow the structure and format of existing cheat sheets
+5. Ensure your cheat sheet is well-organized, accurate, and easy to understand
+
+### Improving Existing Cheat Sheets
+
+- Fix typos or incorrect information
+- Add missing examples or use cases
+- Improve formatting and readability
+- Add helpful notes or tips
+
+<Tip>
+Good cheat sheets are:
+- **Concise** - Quick reference, not a tutorial
+- **Well-organized** - Logical structure with clear sections
+- **Accurate** - Up-to-date and correct information
+- **Example-rich** - Include practical code examples
+</Tip>
+
+## Code Review Process
+
+After you submit a pull request:
+
+1. **Automated checks** - CI/CD pipelines will run automated tests
+2. **Code review** - Maintainers will review your code and provide feedback
+3. **Revisions** - You may be asked to make changes based on feedback
+4. **Approval** - Once approved, your PR will be merged
+5. **Release** - Your contribution will be included in the next release
+
+## Development Resources
+
+<CardGroup cols={2}>
+  <Card title="Development Setup" icon="gear" href="/guides/development-setup">
+    Complete guide for setting up your local development environment
+  </Card>
+  <Card title="Backend Configuration" icon="server" href="/guides/backend-configuration">
+    Learn how to configure and run the backend API locally
+  </Card>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/ivansaul/cheat-sheets/issues">
+    Browse open issues and find something to work on
+  </Card>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/tDvybtJ7y9">
+    Join our Discord server for discussions and help
+  </Card>
+</CardGroup>
+
+## Questions?
+
+If you have questions about contributing:
+
+- Check existing [issues](https://github.com/ivansaul/cheat-sheets/issues) and discussions
+- Ask in our [Discord community](https://discord.gg/tDvybtJ7y9)
+- Open a new issue with the `question` label
+
+We appreciate all contributions, no matter how small. Thank you for helping make Cheat Sheets better!

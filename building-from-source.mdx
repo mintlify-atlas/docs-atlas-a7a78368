@@ -1,0 +1,393 @@
+---
+title: Building from Source
+description: Set up the development environment and build the Cheat Sheets app from source code
+---
+
+## Overview
+
+This guide will help you set up the development environment and build the Cheat Sheets app from source. This is useful if you want to contribute to the project, customize the app, or understand how it works.
+
+<Note>
+  Building from source requires familiarity with Flutter development and command-line tools. If you just want to use the app, see the [Installation](/installation) guide instead.
+</Note>
+
+## Prerequisites
+
+Before you begin, ensure you have the following tools installed:
+
+<CardGroup cols={3}>
+  <Card title="Flutter" icon="mobile">
+    [Install Flutter](https://flutter.dev/docs/get-started/install) (SDK 3.1.2 or higher)
+  </Card>
+  <Card title="Rust" icon="rust">
+    [Install Rust](https://www.rust-lang.org/tools/install) (for backend development)
+  </Card>
+  <Card title="npm" icon="node">
+    [Install npm](https://docs.npmjs.com/getting-started/installing-node) (for backend tools)
+  </Card>
+</CardGroup>
+
+<Warning>
+  Make sure your Flutter installation is properly configured by running `flutter doctor` and resolving any issues before proceeding.
+</Warning>
+
+## Quick Start
+
+If you just want to build the app without setting up the backend, follow these steps:
+
+<Steps>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/ivansaul/cheat-sheets.git
+    cd cheat-sheets
+    ```
+  </Step>
+  
+  <Step title="Install dependencies">
+    ```bash
+    flutter pub get
+    ```
+  </Step>
+  
+  <Step title="Generate code">
+    ```bash
+    dart run build_runner build
+    ```
+  </Step>
+  
+  <Step title="Run the app">
+    ```bash
+    flutter run --release
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  The quick start method connects to the production API. For full local development with a local backend, see the [Full Development Setup](#full-development-setup) section below.
+</Note>
+
+## Full Development Setup
+
+For complete local development including the backend API, follow these comprehensive instructions.
+
+### Backend Setup
+
+The app requires a backend API to serve cheat sheet content. Set up the backend first:
+
+<Steps>
+  <Step title="Clone the worker repository">
+    ```bash
+    git clone https://github.com/ivansaul/devstack-worker.git
+    cd devstack-worker
+    ```
+  </Step>
+  
+  <Step title="Run the seed script">
+    This creates and populates the database:
+    ```bash
+    cargo run -p cheatsheets
+    ```
+  </Step>
+  
+  <Step title="Initialize the database">
+    ```bash
+    npx wrangler d1 execute CHEATSHEETS --local --file=./schema.sql
+    ```
+  </Step>
+  
+  <Step title="Start the development server">
+    ```bash
+    npx wrangler dev --ip 0.0.0.0 --port 8787
+    ```
+    
+    The backend API will be available at `http://localhost:8787`
+  </Step>
+</Steps>
+
+### Flutter App Setup
+
+With the backend running, now set up the Flutter app:
+
+<Steps>
+  <Step title="Clone the app repository">
+    ```bash
+    git clone https://github.com/ivansaul/cheat-sheets.git
+    cd cheat-sheets
+    ```
+  </Step>
+  
+  <Step title="Configure environment variables">
+    Create `.env` and `.env_debug` files in the root directory:
+    
+    ```bash .env
+    API_CHEATSHEET_BASE_URL=http://localhost:8787/api
+    API_CHEATSHEET_LIST_ENDPOINT=/cheatsheets
+    API_CHEATSHEET_DETAIL_ENDPOINT=/cheatsheets/:id
+    API_COUPON_BASE_URL=https://cdn.real.discount/api
+    API_COUPON_LIST_ENDPOINT=/courses
+    API_COUPON_ENDPOINT=/courses/slug/:slug
+    ```
+    
+    <Note>
+      **For Android Emulator:** Replace `localhost` with your computer's IP address (e.g., `http://192.168.1.100:8787/api`)
+    </Note>
+  </Step>
+  
+  <Step title="Install Flutter dependencies">
+    ```bash
+    flutter pub get
+    ```
+  </Step>
+  
+  <Step title="Generate code with watch mode">
+    Run the build runner in watch mode to automatically regenerate code on changes:
+    ```bash
+    dart run build_runner watch -d
+    ```
+    
+    Keep this running in a separate terminal window.
+  </Step>
+  
+  <Step title="Run the app">
+    In a new terminal window:
+    ```bash
+    flutter run
+    ```
+  </Step>
+</Steps>
+
+## Build Commands
+
+Here are common build commands for different scenarios:
+
+<CodeGroup>
+```bash Debug Build
+# Run in debug mode (hot reload enabled)
+flutter run
+```
+
+```bash Release Build
+# Run in release mode (optimized performance)
+flutter run --release
+```
+
+```bash Profile Build
+# Run in profile mode (performance profiling)
+flutter run --profile
+```
+
+```bash Build APK
+# Build Android APK
+flutter build apk --release
+```
+
+```bash Build App Bundle
+# Build Android App Bundle for Play Store
+flutter build appbundle --release
+```
+
+```bash Build iOS
+# Build iOS app (macOS only)
+flutter build ios --release
+```
+
+```bash Build IPA
+# Build iOS IPA file (macOS only)
+flutter build ipa --release
+```
+</CodeGroup>
+
+## Code Generation
+
+The project uses code generation for various features. Here are the key commands:
+
+<Tabs>
+  <Tab title="Build Once">
+    Generate code once:
+    ```bash
+    dart run build_runner build
+    ```
+  </Tab>
+  
+  <Tab title="Watch Mode">
+    Automatically regenerate on file changes:
+    ```bash
+    dart run build_runner watch -d
+    ```
+  </Tab>
+  
+  <Tab title="Clean Build">
+    Delete previous generated files and rebuild:
+    ```bash
+    dart run build_runner build --delete-conflicting-outputs
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+  The project uses build_runner for generating code from annotations including:
+  - Riverpod providers (`@riverpod`)
+  - JSON serialization (`@JsonSerializable`)
+  - Freezed models (`@freezed`)
+  - Environment variables (`@Envied`)
+  - Go Router routes (`@TypedGoRoute`)
+</Note>
+
+## Project Structure
+
+Understanding the project structure will help you navigate the codebase:
+
+```
+cheat-sheets/
+├── android/          # Android-specific code
+├── ios/              # iOS-specific code
+├── lib/              # Flutter/Dart source code
+│   ├── main.dart     # App entry point
+│   └── ...           # Feature modules
+├── assets/           # Images, icons, and data files
+├── docs/             # Documentation assets
+├── test/             # Unit and widget tests
+├── pubspec.yaml      # Flutter dependencies
+├── .env              # Environment variables (create this)
+└── .env_debug        # Debug environment variables (create this)
+```
+
+## Key Dependencies
+
+The app uses several important packages:
+
+<AccordionGroup>
+  <Accordion title="State Management">
+    - **Riverpod** (`flutter_riverpod`, `hooks_riverpod`, `riverpod_annotation`) - State management
+    - **Flutter Hooks** (`flutter_hooks`) - React-like hooks for Flutter
+  </Accordion>
+  
+  <Accordion title="Navigation">
+    - **Go Router** (`go_router`) - Declarative routing
+  </Accordion>
+  
+  <Accordion title="Networking">
+    - **Dio** (`dio`) - HTTP client
+    - **Internet Connection Checker Plus** (`internet_connection_checker_plus`) - Network status
+  </Accordion>
+  
+  <Accordion title="UI & Rendering">
+    - **Markdown Widget** (`markdown_widget`) - Markdown rendering
+    - **Flutter Highlight** (`flutter_highlight`) - Syntax highlighting
+    - **Flex Color Scheme** (`flex_color_scheme`) - Theme management
+    - **Google Fonts** (`google_fonts`) - Custom fonts
+    - **Flutter Animate** (`flutter_animate`) - Animations
+  </Accordion>
+  
+  <Accordion title="Utilities">
+    - **FpDart** (`fpdart`) - Functional programming utilities
+    - **Freezed** (`freezed_annotation`) - Immutable models
+    - **JSON Annotation** (`json_annotation`) - JSON serialization
+    - **Envied** (`envied`) - Environment variable management
+  </Accordion>
+</AccordionGroup>
+
+## Development Tips
+
+<Tip>
+  **Hot Reload:** Press `r` in the terminal running `flutter run` to hot reload changes without restarting the app.
+</Tip>
+
+<Tip>
+  **Hot Restart:** Press `R` to perform a full restart of the app while keeping your place in the app.
+</Tip>
+
+<Tip>
+  **Code Generation:** Keep `dart run build_runner watch -d` running in a separate terminal to automatically regenerate code as you work.
+</Tip>
+
+<Warning>
+  **Environment Variables:** Remember to restart the app after changing `.env` files, as environment variables are loaded at build time.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Build runner fails">
+    Try cleaning the build cache:
+    ```bash
+    flutter clean
+    flutter pub get
+    dart run build_runner build --delete-conflicting-outputs
+    ```
+  </Accordion>
+  
+  <Accordion title="API connection issues">
+    - Verify the backend server is running on `http://localhost:8787`
+    - For Android emulator, use your computer's IP instead of `localhost`
+    - Check firewall settings aren't blocking the connection
+  </Accordion>
+  
+  <Accordion title="Flutter doctor issues">
+    Run `flutter doctor -v` to see detailed diagnostic information and follow the recommendations to resolve any issues.
+  </Accordion>
+  
+  <Accordion title="iOS build fails">
+    - Ensure you have Xcode installed (macOS only)
+    - Run `pod install` in the `ios/` directory
+    - Try cleaning: `flutter clean && cd ios && pod deintegrate && pod install`
+  </Accordion>
+</AccordionGroup>
+
+## Contributing
+
+Interested in contributing to the project? Here's how to get started:
+
+<Steps>
+  <Step title="Fork the repository">
+    Create your own fork of the project on GitHub
+  </Step>
+  
+  <Step title="Create a feature branch">
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+  </Step>
+  
+  <Step title="Make your changes">
+    Implement your feature or bug fix
+  </Step>
+  
+  <Step title="Test thoroughly">
+    Ensure your changes work on both Android and iOS
+  </Step>
+  
+  <Step title="Submit a pull request">
+    Open a PR against the main repository with a clear description of your changes
+  </Step>
+</Steps>
+
+For more detailed contribution guidelines, refer to the [DEVELOPMENT.md](https://github.com/ivansaul/cheat-sheets/blob/main/DEVELOPMENT.md) file in the repository.
+
+## Additional Resources
+
+<CardGroup cols={2}>
+  <Card title="GitHub Repository" icon="github" href="https://github.com/ivansaul/cheat-sheets">
+    View the source code and open issues
+  </Card>
+  <Card title="Flutter Documentation" icon="book" href="https://flutter.dev/docs">
+    Learn more about Flutter development
+  </Card>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/tDvybtJ7y9">
+    Join the community for help and discussions
+  </Card>
+  <Card title="Report Issues" icon="bug" href="https://github.com/ivansaul/cheat-sheets/issues">
+    Found a bug? Let us know!
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Introduction" icon="book" href="/introduction">
+    Learn about the app's features and capabilities
+  </Card>
+  <Card title="Installation" icon="download" href="/installation">
+    Install the pre-built app on your device
+  </Card>
+</CardGroup>

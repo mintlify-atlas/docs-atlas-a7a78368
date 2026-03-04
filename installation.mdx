@@ -1,0 +1,180 @@
+---
+title: Installation
+description: Install the Cheat Sheets app on your Android or iOS device
+---
+
+## Overview
+
+Cheat Sheets is available for both Android and iOS devices. Follow the platform-specific instructions below to install the app on your device.
+
+<Note>
+  The installation process differs between Android and iOS. iOS installation requires AltStore setup as the app is not available on the App Store.
+</Note>
+
+## Android Installation
+
+Android users have multiple options to install the app:
+
+<Tabs>
+  <Tab title="Google Play Store">
+    ### Install from Google Play
+    
+    The easiest way to install Cheat Sheets on Android is through the Google Play Store.
+    
+    <Steps>
+      <Step title="Open Google Play Store">
+        Visit the [Cheat Sheets app page](https://play.google.com/store/apps/details?id=com.ivansaul.cheatsheets) on Google Play
+      </Step>
+      <Step title="Install the app">
+        Tap the **Install** button to download and install the app
+      </Step>
+      <Step title="Launch the app">
+        Once installed, tap **Open** or find the app icon on your home screen
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="GitHub Releases">
+    ### Install from GitHub Releases
+    
+    You can also download the app directly from GitHub Releases.
+    
+    <Steps>
+      <Step title="Download the APK">
+        Go to [GitHub Releases](https://github.com/ivansaul/cheat-sheets/releases/latest) and download:
+        - `.apk` file for direct installation
+        - `.aab` file for Google Play distribution
+      </Step>
+      <Step title="Enable installation from unknown sources">
+        On your Android device, go to **Settings** > **Security** > Enable **Unknown sources**
+      </Step>
+      <Step title="Install the APK">
+        Open the downloaded `.apk` file and follow the installation prompts
+      </Step>
+    </Steps>
+    
+    <Warning>
+      Make sure to download the APK only from the official GitHub repository to ensure you're getting a safe, unmodified version of the app.
+    </Warning>
+  </Tab>
+</Tabs>
+
+## iOS Installation
+
+On iOS, the app is distributed via **AltStore** (no jailbreak required).
+
+### Prerequisites
+
+Before installing the app, you need to set up AltStore on your iOS device.
+
+<AccordionGroup>
+  <Accordion title="Setup AltStore on macOS">
+    Follow the official [AltStore installation guide for macOS](https://faq.altstore.io/altstore-classic/how-to-install-altstore-macos)
+    
+    Or watch this [video tutorial for macOS](https://www.youtube.com/watch?v=AtFcvxCBt-A)
+  </Accordion>
+  
+  <Accordion title="Setup AltStore on Windows">
+    Follow the official [AltStore installation guide for Windows](https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows)
+    
+    Or watch this [video tutorial for Windows](https://www.youtube.com/watch?v=MY_2WqlzrHE)
+  </Accordion>
+</AccordionGroup>
+
+### Installing Cheat Sheets on iOS
+
+Once AltStore is set up, you can install Cheat Sheets using one of these methods:
+
+<Tabs>
+  <Tab title="AltStore Source (Recommended)">
+    <Steps>
+      <Step title="Add the AltStore source">
+        Open [AltStore source link](https://tinyurl.com/ivansaulAltstore) on your iOS device
+      </Step>
+      <Step title="Trust the source">
+        Tap **Add Source** when prompted
+      </Step>
+      <Step title="Install the app">
+        Find **Cheat Sheets** in your AltStore sources and tap **Install**
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="Manual Installation">
+    <Steps>
+      <Step title="Download the IPA file">
+        Download the latest `.ipa` file from [GitHub Releases](https://github.com/ivansaul/cheat-sheets/releases/latest)
+      </Step>
+      <Step title="Open with AltStore">
+        Transfer the `.ipa` file to your iOS device and open it with AltStore
+      </Step>
+      <Step title="Install the app">
+        Follow the AltStore prompts to install the app
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+### Important iOS Launch Note
+
+<Warning>
+  **Known Issue:** Opening the app via the **OPEN** button in AltStore may cause it to not work correctly due to a deeplink issue.
+  
+  **Solution:** Always open the app from the **home screen icon** instead. This issue will be fixed in a future update.
+</Warning>
+
+## Verifying Installation
+
+After installation, verify that the app is working correctly:
+
+<Steps>
+  <Step title="Launch the app">
+    Open Cheat Sheets from your device's home screen
+  </Step>
+  <Step title="Check connectivity">
+    The app should load the available cheat sheets from the server
+  </Step>
+  <Step title="Browse content">
+    Navigate through different programming language cheat sheets to ensure everything loads properly
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="App won't install on Android">
+    - Ensure you have enabled **Unknown sources** in your device settings
+    - Check that you have enough storage space
+    - Try downloading the APK again in case the file was corrupted
+  </Accordion>
+  
+  <Accordion title="iOS app crashes on launch">
+    - Make sure you're opening the app from the home screen, not the AltStore OPEN button
+    - Verify that AltStore is properly installed and your device is trusted
+    - Try reinstalling the app through AltStore
+  </Accordion>
+  
+  <Accordion title="Content not loading">
+    - Check your internet connection
+    - Verify that you're not behind a firewall blocking the API
+    - Try closing and reopening the app
+  </Accordion>
+</AccordionGroup>
+
+## Need Help?
+
+If you continue to experience issues:
+
+- Open an [Issue](https://github.com/ivansaul/cheat-sheets/issues) on GitHub
+- Join the [Discord Community](https://discord.gg/tDvybtJ7y9) for support
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Introduction" icon="book" href="/introduction">
+    Learn more about the features and capabilities
+  </Card>
+  <Card title="Build from Source" icon="code" href="/building-from-source">
+    Set up the development environment and build the app yourself
+  </Card>
+</CardGroup>

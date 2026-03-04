@@ -1,0 +1,382 @@
+---
+title: Development Setup
+description: Set up your local development environment for the Cheat Sheets Flutter app
+---
+
+## Prerequisites
+
+Before you begin, ensure you have the following tools installed:
+
+<CardGroup cols={3}>
+  <Card title="Flutter" icon="mobile">
+    Flutter SDK 3.1.2 or higher
+  </Card>
+  
+  <Card title="Rust" icon="rust">
+    Rust toolchain for backend workers
+  </Card>
+  
+  <Card title="Node.js" icon="node-js">
+    npm for Wrangler CLI
+  </Card>
+</CardGroup>
+
+<Info>
+  The app requires Flutter SDK version `>=3.1.2 <4.0.0` as specified in `pubspec.yaml`.
+</Info>
+
+### Installation Links
+
+<Tabs>
+  <Tab title="Flutter">
+    Install Flutter by following the official guide:
+    
+    [Flutter Installation Guide](https://flutter.dev/docs/get-started/install)
+    
+    Verify installation:
+    ```bash
+    flutter --version
+    flutter doctor
+    ```
+  </Tab>
+  
+  <Tab title="Rust">
+    Install Rust using rustup:
+    
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
+    
+    [Rust Installation Guide](https://www.rust-lang.org/tools/install)
+  </Tab>
+  
+  <Tab title="Node.js">
+    Install Node.js and npm:
+    
+    [Node.js Download](https://docs.npmjs.com/getting-started/installing-node)
+    
+    Verify installation:
+    ```bash
+    node --version
+    npm --version
+    ```
+  </Tab>
+</Tabs>
+
+## Project Setup
+
+### Step 1: Clone the Repository
+
+Clone the main application repository:
+
+```bash
+git clone https://github.com/ivansaul/cheat-sheets.git
+cd cheat-sheets
+```
+
+<Note>
+  The project structure includes:
+  - `lib/src/` - Main application source code
+  - `assets/` - Icons and local data files
+  - `pubspec.yaml` - Flutter dependencies
+  - `.env` and `.env_debug` - Environment configuration
+</Note>
+
+### Step 2: Install Flutter Dependencies
+
+Install all required Flutter packages:
+
+```bash
+flutter pub get
+```
+
+This will install key dependencies including:
+
+<AccordionGroup>
+  <Accordion title="State Management">
+    - `flutter_riverpod` (2.6.1) - State management
+    - `hooks_riverpod` (2.6.1) - Hooks integration
+    - `riverpod_annotation` (2.6.1) - Code generation annotations
+  </Accordion>
+  
+  <Accordion title="Networking">
+    - `dio` (5.8.0+1) - HTTP client
+    - `internet_connection_checker_plus` (2.9.1+2) - Connection monitoring
+    - `flutter_cache_manager` (3.4.1) - Cache management
+  </Accordion>
+  
+  <Accordion title="UI & Theming">
+    - `flex_color_scheme` (8.4.0) - Advanced theming
+    - `google_fonts` (7.1.0) - Font integration
+    - `flutter_animate` (4.5.2) - Animations
+    - `gap` (3.0.1) - Spacing widgets
+  </Accordion>
+  
+  <Accordion title="Content Rendering">
+    - `flutter_highlight` (0.7.0) - Syntax highlighting
+    - `markdown_widget` (2.3.2+8) - Markdown rendering
+    - `html2md` (1.3.2) - HTML to Markdown conversion
+  </Accordion>
+  
+  <Accordion title="Navigation & Routing">
+    - `go_router` (15.1.1) - Declarative routing
+    - `go_router_builder` (2.9.0) - Type-safe route generation
+  </Accordion>
+</AccordionGroup>
+
+### Step 3: Configure Environment Variables
+
+Create environment configuration files in the project root:
+
+<Tabs>
+  <Tab title=".env (Production)">
+    Create `.env` for production configuration:
+    
+    ```bash .env
+    # Cheatsheet API
+    API_CHEATSHEET_BASE_URL=https://your-production-api.com/api
+    API_CHEATSHEET_LIST_ENDPOINT=/cheatsheets
+    API_CHEATSHEET_DETAIL_ENDPOINT=/cheatsheets/:id
+    
+    # Coupon API
+    API_COUPON_BASE_URL=https://cdn.real.discount/api
+    API_COUPON_LIST_ENDPOINT=/courses
+    API_COUPON_ENDPOINT=/courses/slug/:slug
+    ```
+  </Tab>
+  
+  <Tab title=".env_debug (Development)">
+    Create `.env_debug` for local development:
+    
+    ```bash .env_debug
+    # For local development server
+    API_CHEATSHEET_BASE_URL=http://localhost:8787/api
+    
+    # For Android emulator (use your machine's IP)
+    # API_CHEATSHEET_BASE_URL=http://YOUR_IP:8787/api
+    
+    API_CHEATSHEET_LIST_ENDPOINT=/cheatsheets
+    API_CHEATSHEET_DETAIL_ENDPOINT=/cheatsheets/:id
+    
+    # Coupon API (uses production endpoint)
+    API_COUPON_BASE_URL=https://cdn.real.discount/api
+    API_COUPON_LIST_ENDPOINT=/courses
+    API_COUPON_ENDPOINT=/courses/slug/:slug
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+  For Android emulators, `localhost` won't work. Use your machine's IP address instead:
+  ```bash
+  API_CHEATSHEET_BASE_URL=http://192.168.1.100:8787/api
+  ```
+  Find your IP with `ipconfig` (Windows) or `ifconfig` (Mac/Linux).
+</Warning>
+
+### Step 4: Generate Code
+
+Run code generation for Riverpod providers, routes, and environment variables:
+
+```bash
+dart run build_runner build
+```
+
+For continuous generation during development:
+
+```bash
+dart run build_runner watch -d
+```
+
+<Note>
+  The build runner generates:
+  - `*.g.dart` files - JSON serialization, environment variables
+  - `app_routes.g.dart` - Type-safe route definitions (from `lib/src/router/app_routes.dart:13`)
+  - Riverpod provider code
+</Note>
+
+## Project Structure
+
+Understanding the codebase organization:
+
+```plaintext
+lib/src/
+├── app.dart                    # Main app widget
+├── router/
+│   ├── app_router.dart        # GoRouter configuration
+│   └── app_routes.dart        # Route definitions
+├── features/
+│   ├── cheatsheets/
+│   │   ├── data/              # Data sources & repositories
+│   │   ├── domain/            # Domain models (Cheatsheet, SectionSheet)
+│   │   └── presentation/      # Screens, widgets, providers
+│   ├── coupons/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   └── settings/
+│       └── settings_screen.dart
+├── shared/
+│   ├── services/
+│   │   ├── network/           # DioNetworkService
+│   │   └── storage/           # SharedPreferences wrapper
+│   ├── widgets/               # Reusable widgets
+│   ├── providers/             # App-wide providers
+│   └── utils/                 # Utility functions
+├── theme/
+│   ├── app_theme.dart         # Theme configuration
+│   └── theme_provider.dart    # Theme state management
+└── constants/
+    └── constants.dart          # App constants
+```
+
+<Info>
+  The app follows a **feature-first** architecture with clean separation between data, domain, and presentation layers.
+</Info>
+
+## Running the App
+
+### Development Mode
+
+Run the app in debug mode:
+
+```bash
+flutter run
+```
+
+Select your target device when prompted (iOS simulator, Android emulator, or physical device).
+
+### Release Mode
+
+Build and run an optimized release version:
+
+```bash
+flutter run --release
+```
+
+<Tabs>
+  <Tab title="Android">
+    Build APK:
+    ```bash
+    flutter build apk --release
+    ```
+    
+    Build App Bundle:
+    ```bash
+    flutter build appbundle --release
+    ```
+    
+    Output: `build/app/outputs/`
+  </Tab>
+  
+  <Tab title="iOS">
+    Build IPA (requires Mac):
+    ```bash
+    flutter build ipa --release
+    ```
+    
+    Output: `build/ios/ipa/`
+    
+    <Warning>
+      iOS builds require proper code signing configuration in Xcode.
+    </Warning>
+  </Tab>
+</Tabs>
+
+## Development Workflow
+
+### Hot Reload
+
+While running in debug mode:
+
+- Press `r` in the terminal to hot reload
+- Press `R` to hot restart
+- Press `q` to quit
+
+### Code Generation
+
+Run build_runner in watch mode for automatic code generation:
+
+```bash
+dart run build_runner watch -d
+```
+
+This watches for changes in:
+- Route definitions (`@TypedGoRoute`)
+- Riverpod providers (`@riverpod`)
+- JSON serializable models (`@JsonSerializable`)
+- Environment variables (`@EnviedField`)
+
+### Linting
+
+The project uses Flutter Lints and custom lints:
+
+```bash
+flutter analyze
+```
+
+Dev dependencies for linting:
+- `flutter_lints` (5.0.0)
+- `custom_lint` (0.7.5)
+- `riverpod_lint` (2.6.5)
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion title="Build runner fails">
+    Clear generated files and rebuild:
+    ```bash
+    dart run build_runner clean
+    dart run build_runner build --delete-conflicting-outputs
+    ```
+  </Accordion>
+  
+  <Accordion title="Environment variables not loading">
+    1. Ensure `.env` and `.env_debug` files exist in the project root
+    2. Run `dart run build_runner build` to regenerate `env.g.dart`
+    3. Restart the app
+  </Accordion>
+  
+  <Accordion title="Android emulator can't connect to localhost">
+    Use `10.0.2.2` for Android emulator or your machine's actual IP address:
+    ```bash
+    API_CHEATSHEET_BASE_URL=http://10.0.2.2:8787/api
+    ```
+  </Accordion>
+  
+  <Accordion title="Flutter doctor shows issues">
+    Run `flutter doctor -v` for detailed diagnostics and follow the suggested fixes.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Backend Configuration" icon="server" href="/guides/backend-configuration">
+    Set up the Cloudflare Workers backend for local development
+  </Card>
+  
+  <Card title="Using the App" icon="mobile" href="/guides/using-the-app">
+    Learn about app features and navigation
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+<CardGroup cols={2}>
+  <Card title="Flutter Documentation" icon="book" href="https://flutter.dev/docs">
+    Official Flutter framework documentation
+  </Card>
+  
+  <Card title="Riverpod Guide" icon="state" href="https://riverpod.dev">
+    State management with Riverpod
+  </Card>
+  
+  <Card title="GoRouter Documentation" icon="route" href="https://pub.dev/packages/go_router">
+    Declarative routing package
+  </Card>
+  
+  <Card title="Contributing Guide" icon="users" href="/community/contributing">
+    How to contribute to the project
+  </Card>
+</CardGroup>
