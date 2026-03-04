@@ -1,0 +1,107 @@
+{
+  "projectType": "frontend",
+  "projectName": "Cheat Sheets",
+  "projectDescription": "A mobile reference guide app for developers to quickly access cheat sheets for Python, Rust, Swift, JavaScript, Kotlin, Go, Git, and 50+ more languages and tools.",
+  "theme": "palm",
+  "primaryColor": "#94cb04",
+  "lightColor": "#545454",
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "building-from-source"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/using-the-app",
+              "guides/development-setup",
+              "guides/backend-configuration"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Cheat Sheets",
+        "groups": [
+          {
+            "group": "Programming Languages",
+            "pages": [
+              "cheatsheets/python",
+              "cheatsheets/rust",
+              "cheatsheets/swift",
+              "cheatsheets/javascript",
+              "cheatsheets/kotlin",
+              "cheatsheets/go",
+              "cheatsheets/java",
+              "cheatsheets/cpp",
+              "cheatsheets/c",
+              "cheatsheets/ruby",
+              "cheatsheets/dart"
+            ]
+          },
+          {
+            "group": "Tools & Frameworks",
+            "pages": [
+              "cheatsheets/git",
+              "cheatsheets/docker",
+              "cheatsheets/kubernetes",
+              "cheatsheets/react",
+              "cheatsheets/flutter"
+            ]
+          },
+          {
+            "group": "All Categories",
+            "pages": [
+              "cheatsheets/categories"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Community",
+        "groups": [
+          {
+            "group": "Contributing",
+            "pages": [
+              "community/contributing",
+              "community/code-of-conduct"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "community/support",
+              "community/changelog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "50+ programming language and tool cheat sheets",
+    "Cross-platform mobile app (Android & iOS)",
+    "Clean, modern Flutter UI with syntax highlighting",
+    "Offline-ready reference content",
+    "Open source and community-driven",
+    "Regular updates with new cheat sheets"
+  ],
+  "publicApiSurface": [
+    "Available on Google Play Store",
+    "Available via AltStore for iOS",
+    "GitHub releases for APK/IPA downloads",
+    "Flutter app built with Dart",
+    "Uses Riverpod for state management",
+    "Go Router for navigation",
+    "Markdown widget for content rendering"
+  ]
+}
